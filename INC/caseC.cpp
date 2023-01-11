@@ -1,29 +1,78 @@
 #include <stdio.h>
-#include <stdlib.h>
-#include <math.h>
 
-int main(){
-    int count = 0;
-    scanf("%d",&count); getchar();
-    long double compare = 0;
-    for (int i = 0; i < count; i++)
+int T[200001] = {0};
+
+int main()
+{
+    int Q, x;
+    char symbol;
+    scanf("%d", &Q);
+    getchar();
+    int N = 0;
+    for (int i = 0; i < Q; i++)
     {
-        char op;
-        long double numbers = 0;
-        scanf("%c %Lf",&op, &numbers); getchar();
-        if (op == '+')
+        scanf("%c %d", &symbol, &x);
+        getchar();
+        if (symbol == '+')
         {
-            compare = compare + (int)(pow(2.0, numbers) + 0.5);
+            T[x] += 1;
+            if (T[x] == 0)
+            {
+                N--;
+            }
+            else if (T[x] == 1)
+            {
+                N++;
+            }
+            while (T[x] == 2)
+            {
+                T[x] = 0;
+                N -= 1;
+                x += 1;
+                T[x] += 1;
+                if (T[x] == 0)
+                {
+                    N--;
+                }
+                else if (T[x] == 1)
+                {
+                    N++;
+                }
+            }
         }
-        else if (op == '-')
+        else if (symbol == '-')
         {
-            compare = compare - (int)(pow(2.0, numbers) + 0.5);
+            T[x] -= 1;
+            if (T[x] == 0)
+            {
+                N--;
+            }
+            else if (T[x] == -1)
+            {
+                N++;
+            }
+            while (T[x] == -2)
+            {
+                T[x] = 0;
+                N -= 1;
+                x += 1;
+                T[x] -= 1;
+                if (T[x] == 0)
+                {
+                    N--;
+                }
+                else if (T[x] == -1)
+                {
+                    N++;
+                }
+            }
         }
-        if (compare != 0.0)
+        if (N == 0)
         {
+            printf("YES\n");
+        }
+        else
             printf("NO\n");
-        }
-        else printf("YES\n");
     }
     return 0;
 }
